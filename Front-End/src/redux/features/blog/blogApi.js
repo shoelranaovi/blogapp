@@ -15,8 +15,15 @@ export const blogApi = createApi({
     fetchSingleBlogs: builder.query({
       query: (id) => `/blog/getbookbyid/${id}`,
     }),
+    fetchRelatedBlogs: builder.query({
+      query: (id) => `/blog/relatedpost/${id}`,
+    }),
   }),
 });
 console.log(blogApi);
 
-export const { useFetchBlogsQuery, useFetchSingleBlogsQuery } = blogApi;
+export const {
+  useFetchBlogsQuery,
+  useFetchSingleBlogsQuery,
+  useFetchRelatedBlogsQuery,
+} = blogApi;

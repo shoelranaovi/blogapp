@@ -11,6 +11,7 @@ function Blogs() {
 
   ///get  data from redux
   const { data: blog = [], isLoading } = useFetchBlogsQuery(query);
+  console.log(blog);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -33,7 +34,11 @@ function Blogs() {
             {blog.blog?.map((item, index) => (
               <Link to={`/blog/${item._id}`} className="shadow-md" key={index}>
                 <img src={item.coverImg} alt="" className=" h-72 w-full" />
-                <h2 className="m-3">{item.title} </h2>
+                <div className="">
+                  <h2 className="m-3 w-[400px]  ">
+                    {item.title.substring(0, 30)}..{" "}
+                  </h2>
+                </div>
               </Link>
             ))}
           </div>

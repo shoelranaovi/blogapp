@@ -84,7 +84,7 @@ bookRouter.get("/getbookbyid/:id", async (req, res, next) => {
     }
     const comment = await Comment.find({ postId: id }).populate(
       "user",
-      "username email"
+      "username email "
     );
 
     res.status(200).json({

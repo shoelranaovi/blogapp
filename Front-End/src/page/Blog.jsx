@@ -2,13 +2,15 @@ import { useParams } from "react-router-dom";
 import { useFetchSingleBlogsQuery } from "../redux/features/blog/blogApi";
 
 import CommentCard from "../components/CommentCard";
+import PostACommet from "../components/PostACommet";
+import RelatedBlog from "../components/RelatedBlog";
 
 function Blog() {
   const path = useParams();
 
   const { data: blog = [] } = useFetchSingleBlogsQuery(path.id);
-  console.log(blog.comment);
-  console.log(blog.blog);
+  console.log(blog);
+
   const farmatDate = (isDate) => {
     const date = new Date(isDate);
     return date.toDateString("en-us", {
@@ -19,8 +21,8 @@ function Blog() {
   };
 
   return (
-    <div className=" flex flex-col container gap-4 p-8 mb-10 mx-auto mt-6 ">
-      <div className="bg-white   flex flex-col md:flex-row pb-5 p-8 ">
+    <div className=" flex flex-col md:flex-row  container gap-4 p-8 mb-10 mx-auto mt-6 ">
+      <div className="bg-white w-full  md:w-3/4  flex flex-col  pb-5 p-8 ">
         <div className=" w-full md:w-3/4 ">
           <h1 className="text-3xl font-bold">{blog.blog?.title}</h1>
           <div className=" pt-5 flex flex-col gap-4">
@@ -33,18 +35,19 @@ function Blog() {
               className="bg-cover md:h-[450px] md:w-[90%] "
               alt=""
             />
-            <div>{blog?.content} </div>
+            <div>{blog.blog?.description} </div>
             <div>
               <span className="font-bold">Rating:</span> {blog.blog?.rating}{" "}
               (Based on 2,370 Reviews)
             </div>
           </div>
         </div>
-        <div className="">
-          <h1>Releted post</h1>
-        </div>
+        <CommentCard />
+        <PostACommet />
       </div>
-      <CommentCard comment={blog?.comment} />
+      <div className="w-full lg:w-1/4 bg-slate-50 p-2">
+        <RelatedBlog />
+      </div>
     </div>
   );
 }
