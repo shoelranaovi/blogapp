@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-function PostACommet() {
+function PostACommet({ setComments }) {
   const params = useParams();
+  const path = useParams();
 
   const [comment, setComment] = useState({
     comment: "",
@@ -11,14 +12,12 @@ function PostACommet() {
   });
 
   const navigate = useNavigate();
-  console.log(comment);
 
   function onchange(e) {
     setComment((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   }
 
   async function onsubmit() {
-    console.log("hke");
     const response = await fetch(
       "http://localhost:3000/api/comment/createComment",
       {
@@ -32,9 +31,9 @@ function PostACommet() {
     );
     const data = await response.json();
     setComment((prev) => ({ ...prev, comment: "" }));
-
+    setComments();
     console.log(data);
-    navigate(`/blog/${params.id}`);
+    // navigate(`/blog/${path.id}`);
   }
   return (
     <div className=" bg-white p-4">

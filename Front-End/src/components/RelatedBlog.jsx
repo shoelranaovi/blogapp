@@ -4,8 +4,6 @@ import { useFetchRelatedBlogsQuery } from "../redux/features/blog/blogApi";
 function RelatedBlog() {
   const path = useParams();
   const { data: blog = [] } = useFetchRelatedBlogsQuery(path.id);
-  const data = blog.data;
-  console.log(data);
 
   return (
     <div className="w-full">

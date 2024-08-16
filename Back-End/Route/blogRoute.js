@@ -22,7 +22,7 @@ bookRouter.post(
       const newPost = await createPost.save();
       res.status(200).json({
         data: newPost,
-        message: "user Create Successfully",
+        message: "post Create Successfully",
         success: true,
         error: false,
       });

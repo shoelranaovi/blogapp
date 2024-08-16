@@ -70,6 +70,7 @@ authRoute.post("/sign-in", async (req, res, next) => {
       };
       const userinfromation = {
         id: finduser._id,
+        username: finduser.username,
         email: finduser.email,
         role: finduser.role,
         avatar: finduser.avatar,

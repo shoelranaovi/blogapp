@@ -4,12 +4,14 @@ import { useFetchSingleBlogsQuery } from "../redux/features/blog/blogApi";
 import CommentCard from "../components/CommentCard";
 import PostACommet from "../components/PostACommet";
 import RelatedBlog from "../components/RelatedBlog";
+import { useEffect, useState } from "react";
 
 function Blog() {
   const path = useParams();
-
   const { data: blog = [] } = useFetchSingleBlogsQuery(path.id);
-  console.log(blog);
+
+  const [comment, setcomment] = useState(null);
+  console.log(comment);
 
   const farmatDate = (isDate) => {
     const date = new Date(isDate);
@@ -19,7 +21,17 @@ function Blog() {
       day: "numeric",
     });
   };
-
+  async function fetchcomment() {
+    const response = await fetch(
+      `http://localhost:3000/api/blog/getbookbyid/${path.id} `
+    );
+    const data = await response.json();
+    console.log(data);
+    setcomment(data.comment);
+  }
+  useEffect(() => {
+    fetchcomment();
+  }, [path.id]);
   return (
     <div className=" flex flex-col md:flex-row  container gap-4 p-8 mb-10 mx-auto mt-6 ">
       <div className="bg-white w-full  md:w-3/4  flex flex-col  pb-5 p-8 ">
@@ -42,8 +54,8 @@ function Blog() {
             </div>
           </div>
         </div>
-        <CommentCard />
-        <PostACommet />
+        <CommentCard comment={comment} />
+        <PostACommet setComments={fetchcomment} />
       </div>
       <div className="w-full lg:w-1/4 bg-slate-50 p-2">
         <RelatedBlog />
